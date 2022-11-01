@@ -1,6 +1,6 @@
 class MarvelService {
-  _apiBase = 'https://gateway.marvel.com:443/v1/public/';
-  _apiKey = 'apikey=825a76f0069296d43a59fc01b51c7129';
+  _apiBase = "https://gateway.marvel.com:443/v1/public/";
+  _apiKey = "apikey=825a76f0069296d43a59fc01b51c7129";
   _baseOffset = 210;
 
   getResource = async (url) => {
@@ -21,7 +21,9 @@ class MarvelService {
   };
 
   getCharacter = async (id) => {
-    const res = await this.getResource(`${this._apiBase}characters/${id}?${this._apiKey}`);
+    const res = await this.getResource(
+      `${this._apiBase}characters/${id}?${this._apiKey}`
+    );
     return this._transformCharacter(res.data.results[0]);
   };
 
@@ -31,13 +33,11 @@ class MarvelService {
       name: char.name,
       description: char.description
         ? `${char.description.slice(0, 206)}...`
-        : 'Unfortunately, there is no detailed information about this character :(',
-      thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
+        : "Unfortunately, there is no detailed information about this character:(",
+      thumbnail: char.thumbnail.path + "." + char.thumbnail.extension,
       homepage: char.urls[0].url,
       wiki: char.urls[1].url,
-      comics:
-        // char.comics.items.length !== 0 ? char.comics.items.slice(0, 10) : 'There are no comics',
-        char.comics.items,
+      comics: char.comics.items.slice(0, 10),
     };
   };
 }

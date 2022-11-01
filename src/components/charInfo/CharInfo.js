@@ -1,9 +1,10 @@
-import { Component } from 'react';
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
-import Skeleton from '../skeleton/Skeleton';
-import MarvelService from '../../services/MarvelService';
-import './charInfo.scss';
+import { Component } from "react";
+import PropTypes from "prop-types";
+import Spinner from "../spinner/Spinner";
+import ErrorMessage from "../errorMessage/ErrorMessage";
+import Skeleton from "../skeleton/Skeleton";
+import MarvelService from "../../services/MarvelService";
+import "./charInfo.scss";
 
 class CharInfo extends Component {
   state = {
@@ -30,7 +31,10 @@ class CharInfo extends Component {
       return;
     }
     this.onCharLoading();
-    this.marvelService.getCharacter(charId).then(this.onCharLoaded).catch(this.onError);
+    this.marvelService
+      .getCharacter(charId)
+      .then(this.onCharLoaded)
+      .catch(this.onError);
   };
 
   onCharLoaded = (char) => {
@@ -70,12 +74,15 @@ class CharInfo extends Component {
   }
 }
 
-const View = (char) => {
+const View = ({ char }) => {
   const { name, description, thumbnail, homepage, wiki, comics } = char;
 
-  let imgStyle = { objectFit: 'cover' };
-  if (thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
-    imgStyle = { objectFit: 'unset' };
+  let imgStyle = { objectFit: "cover" };
+  if (
+    thumbnail ===
+    "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
+  ) {
+    imgStyle = { objectFit: "unset" };
   }
 
   return (
@@ -97,6 +104,7 @@ const View = (char) => {
       <div className="char__descr">{description}</div>
       <div className="char__comics">Comics:</div>
       <ul className="char__comics-list">
+        {comics.length > 0 ? null : "There is no comics with this character"}
         {comics.map((item, i) => {
           return (
             <li key={i} className="char__comics-item">
@@ -107,6 +115,10 @@ const View = (char) => {
       </ul>
     </>
   );
+};
+
+CharInfo.propTypes = {
+  charId: PropTypes.number,
 };
 
 export default CharInfo;
