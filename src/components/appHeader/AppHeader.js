@@ -8,7 +8,7 @@ const AppHeader = () => {
           <img
             className="app__logo"
             src="https://www.freepnglogos.com/uploads/marvel-logo-png/image-marvel-studios-logo-marvel-database-2.png"
-            alt="image marvel studios logo"
+            alt="marvel studios logo"
           />
         </a>
         <div>Information portal</div>
