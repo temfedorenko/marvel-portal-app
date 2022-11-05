@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
-import MarvelService from "../../services/MarvelService";
+import useMarvelService from "../../services/MarvelService";
 
 import "./charList.scss";
 
@@ -14,7 +14,7 @@ const CharList = (props) => {
   const [offset, setOffset] = useState(210);
   const [charEnded, setCharEnded] = useState(false);
 
-  const marvelService = new MarvelService();
+  const marvelService = useMarvelService();
 
   useEffect(() => {
     onRequest();
@@ -22,10 +22,7 @@ const CharList = (props) => {
 
   const onRequest = (offset) => {
     onCharListLoading();
-    marvelService
-      .getAllCharacters(offset)
-      .then(onCharListLoaded)
-      .catch(onError);
+    marvelService.getAllCharacters(offset).then(onCharListLoaded).catch(onError);
   };
 
   const onCharListLoading = () => {
@@ -61,10 +58,7 @@ const CharList = (props) => {
 
   const items = charList.map((item, i) => {
     let imgStyle = { objectFit: "cover" };
-    if (
-      item.thumbnail ===
-      "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
-    ) {
+    if (item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg") {
       imgStyle = { objectFit: "unset" };
     }
 
@@ -84,8 +78,7 @@ const CharList = (props) => {
             props.onCharSelect(item.id);
             onFocusItem(i);
           }
-        }}
-      >
+        }}>
         <img src={item.thumbnail} alt={item.name} style={imgStyle} />
         <div className="char__name">{item.name}</div>
       </li>
@@ -105,8 +98,7 @@ const CharList = (props) => {
         className="button button__main button__long"
         disabled={newItemsLoading}
         style={{ display: charEnded ? "none" : "block" }}
-        onClick={() => onRequest(offset)}
-      >
+        onClick={() => onRequest(offset)}>
         <div className="inner">load more</div>
       </button>
     </div>
