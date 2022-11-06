@@ -8,25 +8,19 @@ import "./charList.scss";
 
 const CharList = (props) => {
   const [charList, setCharList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
   const [newItemsLoading, setNewItemsLoading] = useState(false);
-  const [offset, setOffset] = useState(210);
+  const [offset, setOffset] = useState(310);
   const [charEnded, setCharEnded] = useState(false);
 
-  const marvelService = useMarvelService();
+  const { loading, error, getAllCharacters } = useMarvelService();
 
   useEffect(() => {
-    onRequest();
+    onRequest(offset, true);
   }, []);
 
-  const onRequest = (offset) => {
-    onCharListLoading();
-    marvelService.getAllCharacters(offset).then(onCharListLoaded).catch(onError);
-  };
-
-  const onCharListLoading = () => {
-    setNewItemsLoading(true);
+  const onRequest = (offset, initial) => {
+    initial ? setNewItemsLoading(false) : setNewItemsLoading(true);
+    getAllCharacters(offset).then(onCharListLoaded);
   };
 
   const onCharListLoaded = (newCharList) => {
@@ -36,15 +30,9 @@ const CharList = (props) => {
     }
 
     setCharList((charList) => [...charList, ...newCharList]);
-    setLoading(false);
     setNewItemsLoading(false);
     setOffset((offset) => offset + 9);
     setCharEnded(ended);
-  };
-
-  const onError = () => {
-    setError(true);
-    setLoading(false);
   };
 
   const refItems = useRef([]);
@@ -58,7 +46,10 @@ const CharList = (props) => {
 
   const items = charList.map((item, i) => {
     let imgStyle = { objectFit: "cover" };
-    if (item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg") {
+    if (
+      item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg" ||
+      item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708.gif"
+    ) {
       imgStyle = { objectFit: "unset" };
     }
 
@@ -86,14 +77,13 @@ const CharList = (props) => {
   });
 
   const errorMessage = error ? <ErrorMessage /> : null;
-  const spinner = loading ? <Spinner /> : null;
-  const content = !(loading || error) ? items : null;
+  const spinner = loading && !newItemsLoading ? <Spinner /> : null;
 
   return (
     <div className="char__list">
       {errorMessage}
       {spinner}
-      <ul className="char__grid">{content}</ul>
+      <ul className="char__grid">{items}</ul>
       <button
         className="button button__main button__long"
         disabled={newItemsLoading}
