@@ -1,26 +1,37 @@
-import './appHeader.scss';
+import { Link, NavLink } from "react-router-dom";
+import "./appHeader.scss";
 
 const AppHeader = () => {
   return (
     <header className="app__header">
       <h1 className="app__title">
-        <a href="https://www.freepnglogos.com/pics/marvel-logo" title="Image from freepnglogos.com">
+        <Link to="/" title="Image from freepnglogos.com">
           <img
             className="app__logo"
             src="https://www.freepnglogos.com/uploads/marvel-logo-png/image-marvel-studios-logo-marvel-database-2.png"
             alt="marvel studios logo"
           />
-        </a>
+        </Link>
         <div>Information portal</div>
       </h1>
       <nav className="app__menu">
         <ul>
           <li>
-            <a href="#">Characters</a>
+            <NavLink
+              end
+              style={({ isActive }) => ({ color: isActive ? "#9f0013" : "inherit" })}
+              to="/">
+              Characters
+            </NavLink>
           </li>
           /
           <li>
-            <a href="#">Comics</a>
+            <NavLink
+              end
+              style={({ isActive }) => ({ color: isActive ? "#9f0013" : "inherit" })}
+              to="/comics">
+              Comics
+            </NavLink>
           </li>
         </ul>
       </nav>
