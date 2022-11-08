@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
@@ -78,7 +79,7 @@ const View = ({ char }) => {
         {comics.map((item, i) => {
           return (
             <li key={i} className="char__comics-item">
-              {item.name}
+              <Link to={`/comics/${item.resourceURI.slice(43)}`}>{item.name}</Link>
             </li>
           );
         })}
