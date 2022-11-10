@@ -2,6 +2,7 @@ import { useState } from "react";
 import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
+import CharSearch from "../charSearch/CharSearch";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 
 import decoration from "../../resources/img/vision.png";
@@ -17,6 +18,9 @@ const MainPage = () => {
     <>
       <ErrorBoundary>
         <RandomChar />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <CharSearch />
       </ErrorBoundary>
       <div className="char__content">
         <ErrorBoundary>
