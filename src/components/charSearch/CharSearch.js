@@ -1,11 +1,5 @@
+import { logDOM } from "@testing-library/react";
 import { useState } from "react";
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage as FormikErrorMessage,
-} from "formik";
-import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
 import useMarvelService from "../../services/MarvelService";
@@ -14,55 +8,54 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import "./charSearch.scss";
 
 const CharSearch = () => {
+  const [charName, setCharName] = useState("");
   const [char, setChar] = useState(null);
   const { loading, error, getCharacterByName, clearError } = useMarvelService();
 
-  const onCharLoaded = (char) => {
-    setChar(char);
+  const onChange = (e) => {
+    setCharName(e.target.value);
   };
 
-  const updateCharacter = (name) => {
+  const onCharLoaded = (char) => {
+    setChar(char);
+    setCharName("");
+  };
+  console.log(char);
+  console.log(char && char.length);
+
+  const updateCharacter = () => {
     clearError();
 
-    getCharacterByName(name).then((res) => onCharLoaded(res));
+    getCharacterByName(charName).then((res) => onCharLoaded(res));
   };
 
   return (
     <>
-      <div className="char__search">
-        <Formik
-          initialValues={{ charName: "" }}
-          validationSchema={Yup.object({
-            charName: Yup.string()
-              .required("Please, enter the name of character")
-              .min(3, "Min 3 symbols"),
-          })}
-          onSubmit={({ charName }) => updateCharacter(charName)}
-        >
-          <Form>
-            <div className="char__search-title">Find a character by name:</div>
-            <Field
-              className="char__search-input"
-              id="charName"
-              name="charName"
-              type="text"
-              placeholder="Enter name here"
-            />
-            <button
-              type="submit"
-              className="button button__main"
-              disabled={loading}
-            >
-              Find
-            </button>
-            <FormikErrorMessage
-              className="char__search-error"
-              name="charName"
-              component="div"
-            />
-          </Form>
-        </Formik>
-      </div>
+      <form
+        action="#"
+        className="char__search"
+        onSubmit={(e, charName) => {
+          e.preventDefault();
+          updateCharacter(charName);
+        }}
+      >
+        <label htmlFor="charName" className="char__search-label">
+          Find a character by name:
+        </label>
+        <input
+          className="char__search-input"
+          id="charName"
+          type="text"
+          name="charName"
+          value={charName}
+          placeholder="Enter name here"
+          onChange={onChange}
+        />
+        <button type="submit" className="button button__main">
+          <div className="inner">Find</div>
+        </button>
+        {char ? <a href={char[0].homepage}>{char[0].name}</a> : null}
+      </form>
     </>
   );
 };
