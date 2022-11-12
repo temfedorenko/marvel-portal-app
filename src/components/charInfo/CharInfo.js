@@ -50,10 +50,8 @@ const View = ({ char }) => {
 
   let imgStyle = { objectFit: "cover" };
   if (
-    thumbnail ===
-      "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg" ||
-    thumbnail ===
-      "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708.gif"
+    thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg" ||
+    thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708.gif"
   ) {
     imgStyle = { objectFit: "contain" };
   }
@@ -74,16 +72,18 @@ const View = ({ char }) => {
           </div>
         </div>
       </div>
-      <div className="char__descr">{description}</div>
+      <div className="char__descr">
+        {description
+          ? `${description.slice(0, 205)}...`
+          : "Unfortunately, there is no detailed information about this character:("}
+      </div>
       <div className="char__comics">Comics:</div>
       <ul className="char__comics-list">
         {comics.length > 0 ? null : "There is no comics with this character"}
         {comics.map((item, i) => {
           return (
             <li key={i} className="char__comics-item">
-              <Link to={`/comics/${item.resourceURI.slice(43)}`}>
-                {item.name}
-              </Link>
+              <Link to={`/comics/${item.resourceURI.slice(43)}`}>{item.name}</Link>
             </li>
           );
         })}

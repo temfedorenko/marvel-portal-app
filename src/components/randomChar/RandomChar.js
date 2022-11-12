@@ -67,14 +67,14 @@ const View = ({ char }) => {
 
   return (
     <div className="randomchar__block">
-      <img
-        src={thumbnail}
-        alt="Random character"
-        className={thumbnailClassName}
-      />
+      <img src={thumbnail} alt="Random character" className={thumbnailClassName} />
       <div className="randomchar__info">
         <p className="randomchar__name">{name}</p>
-        <p className="randomchar__descr">{description}</p>
+        <p className="randomchar__descr">
+          {description
+            ? `${description.slice(0, 206)}...`
+            : "Unfortunately, there is no detailed information about this character:("}
+        </p>
         <div className="randomchar__btns">
           <a href={homepage} className="button button__main">
             <div className="inner">homepage</div>

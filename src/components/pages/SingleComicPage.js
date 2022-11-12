@@ -24,7 +24,6 @@ const SingleComicPage = () => {
   const onComicLoaded = (comic) => {
     setComic(comic);
   };
-  console.log(comicId);
 
   const errorMessage = error ? <ErrorMessage /> : null;
   const spinner = loading ? <Spinner /> : null;

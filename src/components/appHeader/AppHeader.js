@@ -24,8 +24,7 @@ const AppHeader = () => {
               style={({ isActive }) => ({
                 color: isActive ? "#9f0013" : "inherit",
               })}
-              to="/"
-            >
+              to="/">
               Characters
             </NavLink>
           </li>
@@ -35,8 +34,7 @@ const AppHeader = () => {
               style={({ isActive }) => ({
                 color: isActive ? "#9f0013" : "inherit",
               })}
-              to="/comics"
-            >
+              to="/comics">
               Comics
             </NavLink>
           </li>
