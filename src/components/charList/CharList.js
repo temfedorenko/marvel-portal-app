@@ -10,7 +10,7 @@ import "./charList.scss";
 const CharList = (props) => {
   const [charList, setCharList] = useState([]);
   const [newItemsLoading, setNewItemsLoading] = useState(false);
-  const [offset, setOffset] = useState(310);
+  const [offset, setOffset] = useState(73);
   const [charEnded, setCharEnded] = useState(false);
 
   const { loading, error, getAllCharacters } = useMarvelService();

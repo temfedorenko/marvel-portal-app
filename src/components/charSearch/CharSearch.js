@@ -20,8 +20,6 @@ const CharSearch = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log(charName.length);
-
     if (charName.length === 0) {
       setValidationMessage("This field is required");
       return;
@@ -40,7 +38,6 @@ const CharSearch = () => {
     setChar(char);
     setCharName("");
   };
-  console.log(char);
 
   const updateCharacter = () => {
     clearError();
@@ -50,7 +47,7 @@ const CharSearch = () => {
 
   const searchResult = !char ? null : char.length > 0 ? (
     <div className="char__search-success">
-      Click to visit {char[0].name}'s page
+      <div className="char__search-visit">Click to visit {char[0].name} page</div>
       <Link to={`/characters/${char[0].id}`} className="button button__secondary">
         <div className="inner">To page</div>
       </Link>
@@ -82,15 +79,15 @@ const CharSearch = () => {
             setValidationMessage("");
           }}
         />
-        <button type="submit" className="button button__main">
+        <button type="submit" className="button button__main" disabled={loading}>
           <div className="inner">Find</div>
         </button>
       </form>
 
       <div className="char__search-result">
         {spinner}
-        {errorMessage}
         {validation}
+        {errorMessage}
         {!loading ? searchResult : null}
       </div>
     </div>

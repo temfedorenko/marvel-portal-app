@@ -37,4 +37,15 @@
     font-size: 20px;
     color: $main-color;
   }
+
+  &-success {
+    margin: 25px 25px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &-visit {
+    margin-right: 20px;
+    font-size: 20px;
+  }
 }
