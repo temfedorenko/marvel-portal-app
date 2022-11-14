@@ -37,6 +37,8 @@ const SingleCharPage = () => {
   );
 };
 
+console.log("char page");
+
 const View = ({ data }) => {
   const { name, description, thumbnail, comics } = data;
   return (
@@ -59,7 +61,9 @@ const View = ({ data }) => {
           {comics.map((item, i) => {
             return (
               <li key={i} className="char__comics-item">
-                <Link to={`/comics/${item.resourceURI.slice(43)}`}>{item.name}</Link>
+                <Link to={`/comics/${item.resourceURI.slice(43)}`}>
+                  {item.name}
+                </Link>
               </li>
             );
           })}

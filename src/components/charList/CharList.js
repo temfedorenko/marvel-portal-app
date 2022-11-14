@@ -6,6 +6,7 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import useMarvelService from "../../services/MarvelService";
 
 import "./charList.scss";
+import { useMemo } from "react";
 
 const setContent = (process, Component, newItemsLoading) => {
   switch (process) {
@@ -64,8 +65,10 @@ const CharList = (props) => {
   const items = charList.map((item, i) => {
     let imgStyle = { objectFit: "cover" };
     if (
-      item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg" ||
-      item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708.gif"
+      item.thumbnail ===
+        "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg" ||
+      item.thumbnail ===
+        "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708.gif"
     ) {
       imgStyle = { objectFit: "unset" };
     }
@@ -86,7 +89,8 @@ const CharList = (props) => {
               props.onCharSelect(item.id);
               onFocusItem(i);
             }
-          }}>
+          }}
+        >
           <img src={item.thumbnail} alt={item.name} style={imgStyle} />
           <div className="char__name">{item.name}</div>
         </li>
@@ -101,15 +105,21 @@ const CharList = (props) => {
       </ul>
     );
   };
+  console.log("charlist");
+
+  const elements = useMemo(() => {
+    return setContent(process, itemsContent, newItemsLoading);
+  }, [process]);
 
   return (
     <div className="char__list">
-      {setContent(process, itemsContent, newItemsLoading)}
+      {elements}
       <button
         className="button button__main button__long"
         disabled={newItemsLoading}
         style={{ display: charEnded ? "none" : "block" }}
-        onClick={() => onRequest(offset)}>
+        onClick={() => onRequest(offset)}
+      >
         <div className="inner">load more</div>
       </button>
     </div>

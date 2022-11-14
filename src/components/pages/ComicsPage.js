@@ -4,6 +4,7 @@ import AppBanner from "../appBanner/AppBanner";
 import ComicsList from "../comicsList/ComicsList";
 
 const ComicsPage = () => {
+  console.log("compage");
   return (
     <>
       <Helmet>

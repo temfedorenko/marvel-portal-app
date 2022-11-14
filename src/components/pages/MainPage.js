@@ -16,6 +16,8 @@ const MainPage = () => {
     setChar(id);
   };
 
+  console.log("mp");
+
   return (
     <>
       <Helmet>
