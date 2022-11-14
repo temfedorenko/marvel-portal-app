@@ -8,13 +8,28 @@ import useMarvelService from "../../services/MarvelService";
 
 import "./comicsList.scss";
 
+const setContent = (process, Component, newItemsLoading) => {
+  switch (process) {
+    case "waiting":
+      return <Spinner />;
+    case "loading":
+      return newItemsLoading ? <Component /> : <Spinner />;
+    case "confirmed":
+      return <Component />;
+    case "error":
+      return <ErrorMessage />;
+    default:
+      throw new Error("unespected process state");
+  }
+};
+
 const ComicsList = () => {
   const [comicsList, setComicsList] = useState([]);
   const [newItemsLoading, setNewItemsLoading] = useState(false);
   const [offset, setOffset] = useState(200);
   const [comicsEnded, setComicsEnded] = useState(false);
 
-  const { loading, error, getAllComics } = useMarvelService();
+  const { loading, error, getAllComics, process, setProcess } = useMarvelService();
 
   useEffect(() => {
     onRequest(offset, true);
@@ -22,7 +37,9 @@ const ComicsList = () => {
 
   const onRequest = (offset, initial) => {
     initial ? setNewItemsLoading(false) : setNewItemsLoading(true);
-    getAllComics(offset).then(onComicsListLoaded);
+    getAllComics(offset)
+      .then(onComicsListLoaded)
+      .then(() => setProcess("confirmed"));
   };
 
   const onComicsListLoaded = (newComicsList) => {
@@ -51,16 +68,17 @@ const ComicsList = () => {
     );
   });
 
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const spinner = loading && !newItemsLoading ? <Spinner /> : null;
-
-  return (
-    <div className="comics__list">
-      {errorMessage}
-      {spinner}
+  const itemsContent = () => {
+    return (
       <ul className="comics__grid">
         <TransitionGroup component={null}>{items}</TransitionGroup>
       </ul>
+    );
+  };
+
+  return (
+    <div className="comics__list">
+      {setContent(process, itemsContent, newItemsLoading)}
       <button
         onClick={() => onRequest(offset)}
         className="button button__main button__long"

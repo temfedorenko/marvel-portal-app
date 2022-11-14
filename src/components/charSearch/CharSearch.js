@@ -11,7 +11,7 @@ const CharSearch = () => {
   const [charName, setCharName] = useState("");
   const [char, setChar] = useState(null);
   const [validationMessage, setValidationMessage] = useState("");
-  const { loading, error, getCharacterByName, clearError } = useMarvelService();
+  const { getCharacterByName, clearError, process, setProcess } = useMarvelService();
 
   const onChange = (e) => {
     setCharName(e.target.value);
@@ -42,7 +42,9 @@ const CharSearch = () => {
   const updateCharacter = () => {
     clearError();
 
-    getCharacterByName(charName).then((res) => onCharLoaded(res));
+    getCharacterByName(charName)
+      .then((res) => onCharLoaded(res))
+      .then(() => setProcess("confirmed"));
   };
 
   const searchResult = !char ? null : char.length > 0 ? (
@@ -58,8 +60,8 @@ const CharSearch = () => {
   const validation = validationMessage ? (
     <div className="char__search-error">{validationMessage}</div>
   ) : null;
-  const errorMessage = error ? <ErrorMessage /> : null;
-  const spinner = loading ? <Spinner /> : null;
+  const errorMessage = process === "error" ? <ErrorMessage /> : null;
+  const spinner = process === "loading" ? <Spinner /> : null;
 
   return (
     <div className="char__search">
@@ -79,7 +81,7 @@ const CharSearch = () => {
             setValidationMessage("");
           }}
         />
-        <button type="submit" className="button button__main" disabled={loading}>
+        <button type="submit" className="button button__main" disabled={process === "loading"}>
           <div className="inner">Find</div>
         </button>
       </form>
@@ -88,7 +90,7 @@ const CharSearch = () => {
         {spinner}
         {validation}
         {errorMessage}
-        {!loading ? searchResult : null}
+        {process !== "loading" ? searchResult : null}
       </div>
     </div>
   );
