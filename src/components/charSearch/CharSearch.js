@@ -15,7 +15,7 @@ const CharSearch = () => {
     useMarvelService();
 
   const onChange = (e) => {
-    setCharName(e.target.value);
+    setCharName(e.target.value.toUpperCase());
   };
 
   const onSubmit = (e) => {
@@ -51,7 +51,7 @@ const CharSearch = () => {
   const searchResult = !char ? null : char.length > 0 ? (
     <div className="char__search-success">
       <div className="char__search-visit">
-        Click to visit {char[0].name} page
+        Click to visit {char[0].name}'s page
       </div>
       <Link
         to={`/characters/${char[0].id}`}

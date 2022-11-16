@@ -63,7 +63,11 @@ const View = ({ data }) => {
 
   return (
     <div className="randomchar__block">
-      <img src={thumbnail} alt="Random character" className={thumbnailClassName} />
+      <img
+        src={thumbnail}
+        alt="Random character"
+        className={thumbnailClassName}
+      />
       <div className="randomchar__info">
         <p className="randomchar__name">{name}</p>
         <p className="randomchar__descr">

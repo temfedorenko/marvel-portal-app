@@ -80,8 +80,6 @@ const ComicsList = () => {
     );
   };
 
-  console.log("comics");
-
   const elements = useMemo(() => {
     return setContent(process, itemsContent, newItemsLoading);
   }, [process]);

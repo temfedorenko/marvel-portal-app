@@ -2,9 +2,9 @@ import { Helmet } from "react-helmet";
 
 import AppBanner from "../appBanner/AppBanner";
 import ComicsList from "../comicsList/ComicsList";
+import ComicsSearch from "../comicsSearch/ComicsSearch";
 
 const ComicsPage = () => {
-  console.log("compage");
   return (
     <>
       <Helmet>
@@ -12,6 +12,7 @@ const ComicsPage = () => {
         <title>Marvel comics</title>
       </Helmet>
       <AppBanner />
+      <ComicsSearch />
       <ComicsList />
     </>
   );

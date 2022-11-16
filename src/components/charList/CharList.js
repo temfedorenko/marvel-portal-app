@@ -105,7 +105,6 @@ const CharList = (props) => {
       </ul>
     );
   };
-  console.log("charlist");
 
   const elements = useMemo(() => {
     return setContent(process, itemsContent, newItemsLoading);

@@ -37,8 +37,6 @@ const SingleCharPage = () => {
   );
 };
 
-console.log("char page");
-
 const View = ({ data }) => {
   const { name, description, thumbnail, comics } = data;
   return (
