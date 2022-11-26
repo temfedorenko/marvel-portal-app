@@ -1,7 +1,7 @@
 {
   "name": "marvel-universe",
   "version": "0.1.0",
-  "homepage": "https://temfedorenko.github.io/marvel-portal-app",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
